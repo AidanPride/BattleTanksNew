@@ -2,10 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ActionField extends  JPanel{
-//    final int UP = 1;
-//    final int DOWN = 2;
-//    final int LEFT = 3;
-//    final int RIGHT = 4;
 
     private boolean COLORDED_MODE = false;
     private BattleField battleField;
