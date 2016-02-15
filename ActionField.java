@@ -6,6 +6,7 @@ public class ActionField extends  JPanel{
     private boolean COLORDED_MODE = false;
     private BattleField battleField;
     private Tank tank;
+    private BT7 bt7;
     private Bullet bullet;
     private Direction direction;
 
