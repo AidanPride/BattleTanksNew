@@ -7,6 +7,7 @@ public class ActionField extends  JPanel{
     private BattleField battleField;
     private Tank tank;
     private BT7 bt7;
+    private Tiger tiger;
     private Bullet bullet;
     private Direction direction;
 
