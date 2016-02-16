@@ -33,8 +33,9 @@ public class Tank {
         return y;
     }
     public void updateX(int x){
-                this.x+=x;
+        this.x+=x;
     }
+
     public void updateY(int y){
             this.y+=y;
 
