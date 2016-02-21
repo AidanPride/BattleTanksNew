@@ -5,7 +5,7 @@ public class ActionField extends  JPanel{
 
     private boolean COLORDED_MODE = false;
     private BattleField battleField;
-    private Tank tank;
+    private Tank defender;
     private BT7 bt7;
     private Tank agressor;
     private Bullet bullet;
@@ -14,7 +14,9 @@ public class ActionField extends  JPanel{
 
     void runTheGame() throws Exception {
 
+
     }
+
     private boolean processInterception() throws Exception{
         String coordinates = getQuadrant(bullet.getX() , bullet.getY());
         int y = Integer.parseInt(coordinates.split("_")[0]);
@@ -23,8 +25,13 @@ public class ActionField extends  JPanel{
             if (battleField.scanQuadrant(y , x)!= " "){
                 battleField.updateQuadrant(y, x, " ");
                 return true;
-            }else if(y==tank.getY()/64 && x==tank.getX()/64){
-                tank.destroy();
+            }
+            if(y==defender.getY()/64 && x==defender.getX()/64){
+                defender.destroy();
+                return true;
+            }
+            if(y==agressor.getY()/64 && x==agressor.getX()/64){
+                agressor.destroy();
                 return true;
             }
         }
@@ -36,7 +43,7 @@ public class ActionField extends  JPanel{
     }
 
     public void processMove(Tank tank) throws  Exception{
-        this.tank = tank;
+      //  this.tank = tank;
          Direction direction = tank.getDirection();
         int i = 1;
         while (i <= 64) {
@@ -98,7 +105,7 @@ public class ActionField extends  JPanel{
 
     public ActionField() throws Exception {
         battleField = new BattleField();
-        tank = new Tank(this, battleField);
+        defender = new Tank(this, battleField, 64, 512, Direction.UP);
         bullet = new Bullet(-100, -100, Direction.UP);
         String location = battleField.randomTankPosition();
         agressor = new Tank(this, battleField,Integer.parseInt(location.split("_")[1]),
@@ -150,17 +157,17 @@ public class ActionField extends  JPanel{
         }
 
         g.setColor(new Color(255, 0, 0));
-        g.fillRect(tank.getX(), tank.getY(), 64, 64);
+        g.fillRect(defender.getX(), defender.getY(), 64, 64);
 
         g.setColor(new Color(0, 255, 0));
-        if (tank.getDirection() == Direction.UP) {
-            g.fillRect(tank.getX() + 20, tank.getY(), 24, 34);
-        } else if (tank.getDirection() == Direction.DOWN) {
-            g.fillRect(tank.getX() + 20, tank.getY() + 30, 24, 34);
-        } else if (tank.getDirection() == Direction.LEFT) {
-            g.fillRect(tank.getX(), tank.getY() + 20, 34, 24);
+        if (defender.getDirection() == Direction.UP) {
+            g.fillRect(defender.getX() + 20, defender.getY(), 24, 34);
+        } else if (defender.getDirection() == Direction.DOWN) {
+            g.fillRect(defender.getX() + 20, defender.getY() + 30, 24, 34);
+        } else if (defender.getDirection() == Direction.LEFT) {
+            g.fillRect(defender.getX(), defender.getY() + 20, 34, 24);
         } else {
-            g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
+            g.fillRect(defender.getX() + 30, defender.getY() + 20, 34, 24);
         }
 
          g.setColor(new Color(134, 65, 71));
