@@ -5,20 +5,16 @@ public class ActionField extends  JPanel{
 
     private boolean COLORDED_MODE = false;
     private BattleField battleField;
-    private BT7 defender;
-    private Tiger agressor;
+    private Tank tank;
+    private Tank defender;
+    private Tank agressor;
     private Bullet bullet;
     private Direction direction;
 
 
     void runTheGame() throws Exception {
-        defender.fire();
-        defender.fire();
-        defender.fire();
-        defender.fire();
-        defender.fire();
-        defender.fire();
-        defender.fire();
+      agressor.moveToQuadrant(5,5);
+       defender.clean();
 
     }
 
@@ -48,7 +44,7 @@ public class ActionField extends  JPanel{
     }
 
     public void processMove(Tank tank) throws  Exception{
-      //  this.tank = tank;
+        this.tank = tank;
          Direction direction = tank.getDirection();
         int i = 1;
         while (i <= 64) {
@@ -110,9 +106,9 @@ public class ActionField extends  JPanel{
 
     public ActionField() throws Exception {
         battleField = new BattleField();
-        defender = new BT7(this, battleField, 64, 512, Direction.UP);
+        defender = new Tank(this, battleField, 64, 512, Direction.UP);
         String location = battleField.randomTankPosition();
-        agressor = new Tiger(this, battleField,Integer.parseInt(location.split("_")[1]),
+        agressor = new Tank(this, battleField,Integer.parseInt(location.split("_")[1]),
                 Integer.parseInt(location.split("_")[0]),
                 Direction.RIGHT);
         bullet = new Bullet(-100, -100, Direction.UP);
