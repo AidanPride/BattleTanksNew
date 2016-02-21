@@ -4,4 +4,10 @@ public class BT7 extends Tank {
         super(af, bf, x, y, direction);
         speed = 5;
     }
+
+    public BT7(ActionField af, BattleField bf) {
+        super(af, bf);
+        speed = 5;
+    }
 }
+

@@ -5,15 +5,20 @@ public class ActionField extends  JPanel{
 
     private boolean COLORDED_MODE = false;
     private BattleField battleField;
-    private Tank defender;
-    private BT7 bt7;
-    private Tank agressor;
+    private BT7 defender;
+    private Tiger agressor;
     private Bullet bullet;
     private Direction direction;
 
 
     void runTheGame() throws Exception {
-
+        defender.fire();
+        defender.fire();
+        defender.fire();
+        defender.fire();
+        defender.fire();
+        defender.fire();
+        defender.fire();
 
     }
 
@@ -105,12 +110,13 @@ public class ActionField extends  JPanel{
 
     public ActionField() throws Exception {
         battleField = new BattleField();
-        defender = new Tank(this, battleField, 64, 512, Direction.UP);
-        bullet = new Bullet(-100, -100, Direction.UP);
+        defender = new BT7(this, battleField, 64, 512, Direction.UP);
         String location = battleField.randomTankPosition();
-        agressor = new Tank(this, battleField,Integer.parseInt(location.split("_")[1]),
+        agressor = new Tiger(this, battleField,Integer.parseInt(location.split("_")[1]),
                 Integer.parseInt(location.split("_")[0]),
                 Direction.RIGHT);
+        bullet = new Bullet(-100, -100, Direction.UP);
+
 
         JFrame frame = new JFrame("BATTLE FIELD, DAY 2");
         frame.setMinimumSize(new Dimension(battleField.getBF_WIDTH(), battleField.getBF_HEIGHT() + 22));
