@@ -7,12 +7,13 @@ public class ActionField extends  JPanel{
     private BattleField battleField;
     private Tank tank;
     private BT7 bt7;
-    private Tiger tiger;
+    private Tiger agressor;
     private Bullet bullet;
     private Direction direction;
 
 
     void runTheGame() throws Exception {
+        agressor.randomTankPosition();
         tank.clean();
         tank.destroy();
     }
@@ -98,6 +99,7 @@ public class ActionField extends  JPanel{
         battleField = new BattleField();
         tank = new Tank(this, battleField, 128, 512, Direction.UP);
         bullet = new Bullet(-100, -100, Direction.UP);
+        agressor = new Tiger(this, battleField,0,0,Direction.RIGHT);
 
         JFrame frame = new JFrame("BATTLE FIELD, DAY 2");
         frame.setMinimumSize(new Dimension(battleField.getBF_WIDTH(), battleField.getBF_HEIGHT() + 22));
@@ -156,6 +158,20 @@ public class ActionField extends  JPanel{
         } else {
             g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
         }
+
+         g.setColor(new Color(134, 65, 71));
+         g.fillRect(agressor.getX(), agressor.getY(), 64, 64);
+
+         g.setColor(new Color(0, 255, 0));
+         if (agressor.getDirection() == Direction.UP) {
+             g.fillRect(agressor.getX() + 20, agressor.getY(), 24, 34);
+         } else if (agressor.getDirection() == Direction.DOWN) {
+             g.fillRect(agressor.getX() + 20, agressor.getY() + 30, 24, 34);
+         } else if (agressor.getDirection() == Direction.LEFT) {
+             g.fillRect(agressor.getX(), agressor.getY() + 20, 34, 24);
+         } else {
+             g.fillRect(agressor.getX() + 30, agressor.getY() + 20, 34, 24);
+         }
 
         g.setColor(new Color(255, 255, 0));
         g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
