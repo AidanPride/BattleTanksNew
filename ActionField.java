@@ -7,15 +7,13 @@ public class ActionField extends  JPanel{
     private BattleField battleField;
     private Tank tank;
     private BT7 bt7;
-    private Tiger agressor;
+    private Tank agressor;
     private Bullet bullet;
     private Direction direction;
 
 
     void runTheGame() throws Exception {
-        agressor.randomTankPosition();
-        tank.clean();
-        tank.destroy();
+
     }
     private boolean processInterception() throws Exception{
         String coordinates = getQuadrant(bullet.getX() , bullet.getY());
@@ -24,6 +22,9 @@ public class ActionField extends  JPanel{
         if ((x >= 0 && x < 9) && (y  >= 0 && y < 9)){
             if (battleField.scanQuadrant(y , x)!= " "){
                 battleField.updateQuadrant(y, x, " ");
+                return true;
+            }else if(y==tank.getY()/64 && x==tank.getX()/64){
+                tank.destroy();
                 return true;
             }
         }
@@ -97,9 +98,12 @@ public class ActionField extends  JPanel{
 
     public ActionField() throws Exception {
         battleField = new BattleField();
-        tank = new Tank(this, battleField, 128, 512, Direction.UP);
+        tank = new Tank(this, battleField);
         bullet = new Bullet(-100, -100, Direction.UP);
-        agressor = new Tiger(this, battleField,0,0,Direction.RIGHT);
+        String location = battleField.randomTankPosition();
+        agressor = new Tank(this, battleField,Integer.parseInt(location.split("_")[1]),
+                Integer.parseInt(location.split("_")[0]),
+                Direction.RIGHT);
 
         JFrame frame = new JFrame("BATTLE FIELD, DAY 2");
         frame.setMinimumSize(new Dimension(battleField.getBF_WIDTH(), battleField.getBF_HEIGHT() + 22));

@@ -1,16 +1,17 @@
+import java.util.Random;
 
 public class BattleField {
     final int BF_WIDTH = 590;
     final int BF_HEIGHT = 590;
-    private String[][] battleField = { { " ", "B", "B", "B", "B", "B", "B", "B", " " },
-                                       { "B", " ", "B", "B", " ", " ", " ", " ", "B" },
-                                       { "B", "B", "B", " ", "B", "B", "B", "B", "B" },
-                                       { "B", "B", "B", " ", " ", " ", "B", "B", "B" },
-                                       { "B", "B", "B", " ", "B", "B", "B", "B", "B" },
-                                       { "B", "B", " ", "B", "B", "B", " ", "B", "B" },
-                                       { "B", "B", " ", "B", "B", " ", " ", "B", "B" },
-                                       { "B", " ", " ", "B", "B", "B", "B", " ", "B" },
-                                       { "B", " ", " ", "B", "B", "B", "B", "B", "B" } };
+    private String[][] battleField = {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
+            {"B", " ", "B", "B", " ", " ", " ", " ", "B"},
+            {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
+            {"B", "B", "B", " ", " ", " ", "B", "B", "B"},
+            {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
+            {"B", "B", " ", "B", "B", "B", " ", "B", "B"},
+            {"B", "B", " ", "B", "B", " ", " ", "B", "B"},
+            {"B", " ", " ", "B", "B", "B", "B", " ", "B"},
+            {"B", " ", " ", "B", "B", "B", "B", "B", "B"}};
 
     public BattleField() {
     }
@@ -27,20 +28,37 @@ public class BattleField {
         return battleField;
     }
 
-    public String scanQuadrant(int x , int y){
-       return battleField[x][y];
+    public String scanQuadrant(int x, int y) {
+        return battleField[x][y];
     }
 
-    public void updateQuadrant(int x , int y , String field){
+    public void updateQuadrant(int x, int y, String field) {
         this.battleField[x][y] = field;
     }
 
-    public int getDimentionX(){
-        return  9;
+    public int getDimentionX() {
+        return 9;
     }
 
-    public int getDimentionY(){
-        return  9;
+    public int getDimentionY() {
+        return 9;
     }
 
+    public String randomTankPosition(){
+        String loc="";
+        Random r = new Random();
+        switch (r.nextInt(3)) {
+            case 1:
+                loc= "0_0";
+            break;
+            case 2:
+                loc= "0_512";
+            break;
+            default:
+                loc= "64_64";
+            break;
+        }
+        return loc;
+
+    }
 }

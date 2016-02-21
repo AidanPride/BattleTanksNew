@@ -9,6 +9,11 @@ public class Tank {
     private ActionField af;
     private BattleField bf;
 
+    public Tank(ActionField af, BattleField bf) {
+        this.af = af;
+        this.bf = bf;
+    }
+
     public Tank(ActionField af, BattleField bf, int x, int y, Direction direction) {
         this.af = af;
         this.bf = bf;
@@ -122,16 +127,5 @@ public class Tank {
     public void destroy() throws Exception {
         this.x = -100;
         this.y = -100;
-    }
-
-    public void randomTankPosition() throws Exception {
-        Random r = new Random();
-        if (r.nextInt(10) == 9) {
-            x = 0;
-            y = 0;
-        } else {
-            x = r.nextInt(9) * 64;
-            y = r.nextInt(9) * 64;
-        }
     }
 }
