@@ -38,14 +38,14 @@ public class ActionField extends  JPanel{
                 return true;
             }
             //check tank
-//            if(checkInterception(getQuadrant(tank.getX() , tank.getY()), coordinates)){
-//                if(bullet.getTank().equals(tank)){
-//                    return false;
-//                  }else {
-//                    tank.destroy();
-//                    return true;
-//                  }
-//            }
+            if(checkInterception(getQuadrant(tank.getX() , tank.getY()), coordinates)){
+                if(bullet.getTank().equals(tank)){
+                    return false;
+                  }else {
+                    tank.destroy();
+                    return true;
+                  }
+            }
             //check agressor
             if(checkInterception(getQuadrant(agressor.getX() , agressor.getY()), coordinates)){
                 agressor.destroy();
@@ -141,7 +141,7 @@ public class ActionField extends  JPanel{
         tank = new Tank(this, battleField, 64, 512, Direction.UP);
         String location = battleField.randomTankPosition();
         agressor = new Tiger(this, battleField,64,64,Direction.RIGHT);
-        bullet = new Bullet(-100, -100, Direction.UP);
+        bullet = new Bullet(-100, -100, tank, Direction.UP);
 
 
         JFrame frame = new JFrame("BATTLE FIELD");

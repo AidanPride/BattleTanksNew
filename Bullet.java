@@ -7,7 +7,7 @@ public class Bullet{
     private Tank tank;
     private Direction direction;
 
-    public Bullet(int x , int y , Direction direction) {
+    public Bullet(int x , int y , Tank tank, Direction direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
