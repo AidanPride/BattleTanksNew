@@ -12,17 +12,17 @@ public class ActionField extends  JPanel{
     private Direction direction;
 
 
-    void runTheGame() throws Exception {
-//        tank.fire();
-//        tank.fire();
-//        tank.fire();
-//        tank.fire();
-//        tank.fire();
-//        tank.fire();
-//        tank.fire();
-//        tank.fire();
-//        tank.fire();
-//        tank.fire();
+   void runTheGame() throws Exception {
+        tank.fire();
+        tank.fire();
+        tank.fire();
+        tank.fire();
+        tank.fire();
+        tank.fire();
+        tank.fire();
+        tank.fire();
+        tank.fire();
+        tank.fire();
 
 
     }
@@ -38,17 +38,13 @@ public class ActionField extends  JPanel{
                 return true;
             }
             //check tank
-            if(checkInterception(getQuadrant(tank.getX() , tank.getY()), coordinates)){
-                tank.destroy();
-                return true;
-            }
+//            if(checkInterception(getQuadrant(tank.getX() , tank.getY()), coordinates)){
+//                tank.destroy();
+//                return true;
+//            }
             //check agressor
             if(checkInterception(getQuadrant(agressor.getX() , agressor.getY()), coordinates)){
                 agressor.destroy();
-                Thread.sleep(3000);
-                agressor.updateX(100);
-                agressor.updateY(100);
-
                 return true;
             }
         }
@@ -139,9 +135,7 @@ public class ActionField extends  JPanel{
         battleField = new BattleField();
         tank = new Tank(this, battleField, 64, 512, Direction.UP);
         String location = battleField.randomTankPosition();
-        agressor = new Tiger(this, battleField,Integer.parseInt(location.split("_")[1]),
-                Integer.parseInt(location.split("_")[0]),
-                Direction.RIGHT);
+        agressor = new Tiger(this, battleField,64,64,Direction.RIGHT);
         bullet = new Bullet(-100, -100, Direction.UP);
 
 
@@ -218,6 +212,7 @@ public class ActionField extends  JPanel{
              g.fillRect(agressor.getX() + 30, agressor.getY() + 20, 34, 24);
          }
 
+        //bullet
         g.setColor(new Color(255, 255, 0));
         g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
     }

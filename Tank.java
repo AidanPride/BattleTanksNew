@@ -3,11 +3,11 @@ import java.util.Random;
 public class Tank {
 
     protected int speed = 5;
-    private Direction direction;
-    private int x;
-    private int y;
-    private ActionField af;
-    private BattleField bf;
+    protected Direction direction;
+    protected int x;
+    protected int y;
+    protected ActionField af;
+    protected BattleField bf;
 
     public Tank(ActionField af, BattleField bf) {
         this.af = af;
