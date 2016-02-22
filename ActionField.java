@@ -39,12 +39,17 @@ public class ActionField extends  JPanel{
             }
             //check tank
 //            if(checkInterception(getQuadrant(tank.getX() , tank.getY()), coordinates)){
-//                tank.destroy();
-//                return true;
+//                if(bullet.getTank().equals(tank)){
+//                    return false;
+//                  }else {
+//                    tank.destroy();
+//                    return true;
+//                  }
 //            }
             //check agressor
             if(checkInterception(getQuadrant(agressor.getX() , agressor.getY()), coordinates)){
                 agressor.destroy();
+                agressor.respawn();
                 return true;
             }
         }

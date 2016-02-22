@@ -30,6 +30,14 @@ public class Tank {
         return direction;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public int getX() {
         return x;
     }
@@ -127,5 +135,12 @@ public class Tank {
     public void destroy() throws Exception {
         this.x = -100;
         this.y = -100;
+    }
+
+    public void respawn()throws Exception{
+        Thread.sleep(1500);
+        String loc = bf.randomTankPosition();
+        y= Integer.parseInt(loc.split("_")[0]);
+        x=Integer.parseInt(loc.split("_")[1]);
     }
 }
