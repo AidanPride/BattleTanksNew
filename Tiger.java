@@ -19,4 +19,14 @@ public class Tiger extends Tank{
     public void setArmor(int armor) {
         this.armor = armor;
     }
+
+    @Override
+    public void destroy() throws Exception {
+        if (armor ==1){
+            armor=0;
+        }
+        else {
+            super.destroy();
+        }
+    }
 }

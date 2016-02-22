@@ -7,14 +7,22 @@ public class ActionField extends  JPanel{
     private BattleField battleField;
     private Tank tank;
 
-    private Tank agressor;
+    private Tiger agressor;
     private Bullet bullet;
     private Direction direction;
 
 
     void runTheGame() throws Exception {
-     agressor.moveToQuadrant(5,5);
-       tank.clean();
+//        tank.fire();
+//        tank.fire();
+//        tank.fire();
+//        tank.fire();
+//        tank.fire();
+//        tank.fire();
+//        tank.fire();
+//        tank.fire();
+//        tank.fire();
+//        tank.fire();
 
 
     }
@@ -24,16 +32,23 @@ public class ActionField extends  JPanel{
         int y = Integer.parseInt(coordinates.split("_")[0]);
         int x = Integer.parseInt(coordinates.split("_")[1]);
         if ((x >= 0 && x < 9) && (y  >= 0 && y < 9)){
+            //check battlefield
             if (battleField.scanQuadrant(y , x)!= " "){
                 battleField.updateQuadrant(y, x, " ");
                 return true;
             }
+            //check tank
             if(checkInterception(getQuadrant(tank.getX() , tank.getY()), coordinates)){
                 tank.destroy();
                 return true;
             }
+            //check agressor
             if(checkInterception(getQuadrant(agressor.getX() , agressor.getY()), coordinates)){
                 agressor.destroy();
+                Thread.sleep(3000);
+                agressor.updateX(100);
+                agressor.updateY(100);
+
                 return true;
             }
         }
@@ -61,6 +76,7 @@ public class ActionField extends  JPanel{
     public void processMove(Tank tank) throws  Exception{
         this.tank = tank;
          Direction direction = tank.getDirection();
+        tank.turn(direction);
         int i = 1;
         while (i <= 64) {
             if (direction == Direction.UP && tank.getY() >= 0) {
@@ -123,7 +139,7 @@ public class ActionField extends  JPanel{
         battleField = new BattleField();
         tank = new Tank(this, battleField, 64, 512, Direction.UP);
         String location = battleField.randomTankPosition();
-        agressor = new Tank(this, battleField,Integer.parseInt(location.split("_")[1]),
+        agressor = new Tiger(this, battleField,Integer.parseInt(location.split("_")[1]),
                 Integer.parseInt(location.split("_")[0]),
                 Direction.RIGHT);
         bullet = new Bullet(-100, -100, Direction.UP);
@@ -172,7 +188,7 @@ public class ActionField extends  JPanel{
                 }
             }
         }
-
+        // tank
         g.setColor(new Color(255, 0, 0));
         g.fillRect(tank.getX(), tank.getY(), 64, 64);
 
@@ -187,6 +203,7 @@ public class ActionField extends  JPanel{
             g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
         }
 
+         //agressor
          g.setColor(new Color(134, 65, 71));
          g.fillRect(agressor.getX(), agressor.getY(), 64, 64);
 

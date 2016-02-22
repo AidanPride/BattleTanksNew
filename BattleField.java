@@ -44,7 +44,7 @@ public class BattleField {
         return 9;
     }
 
-    public String randomTankPosition(){
+    public String randomTankPosition() throws  Exception{
         String loc="";
         Random r = new Random();
         switch (r.nextInt(3)) {
