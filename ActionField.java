@@ -5,8 +5,7 @@ public class ActionField extends  JPanel{
 
     private boolean COLORDED_MODE = false;
     private BattleField battleField;
-    private Tank tank;
-
+    private T34 tank;
     private Tiger agressor;
     private Bullet bullet;
     private Direction direction;
@@ -70,12 +69,12 @@ public class ActionField extends  JPanel{
         return false;
     }
 
-    void processTurn(Tank tank) throws  Exception{
+    void processTurn(AbstractTank tank) throws  Exception{
         repaint();
     }
 
-    public void processMove(Tank tank) throws  Exception{
-        this.tank = tank;
+    public void processMove(AbstractTank tank) throws  Exception{
+//        this.tank = tank;
          Direction direction = tank.getDirection();
         tank.turn(direction);
         int i = 1;
@@ -138,11 +137,10 @@ public class ActionField extends  JPanel{
 
     public ActionField() throws Exception {
         battleField = new BattleField();
-        tank = new Tank(this, battleField, 64, 512, Direction.UP);
+        tank = new T34(this, battleField, 64, 512, Direction.UP);
         String location = battleField.randomTankPosition();
         agressor = new Tiger(this, battleField,64,64,Direction.RIGHT);
         bullet = new Bullet(-100, -100, tank, Direction.UP);
-
 
         JFrame frame = new JFrame("BATTLE FIELD");
         frame.setMinimumSize(new Dimension(battleField.getBF_WIDTH(), battleField.getBF_HEIGHT() + 22));

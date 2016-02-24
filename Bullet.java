@@ -4,17 +4,17 @@ public class Bullet{
     private int speed = 2;
     private int x;
     private int y;
-    private Tank tank;
+    private AbstractTank tank;
     private Direction direction;
 
-    public Bullet(int x , int y , Tank tank, Direction direction) {
+    public Bullet(int x , int y , AbstractTank tank, Direction direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.tank=tank;
     }
 
-    public Tank getTank() {
+    public AbstractTank getTank() {
         return tank;
     }
 

@@ -1,7 +1,8 @@
 /**
  * Created by User on 22.02.2016.
  */
-public class T34 extends Tank{
+public class T34 extends AbstractTank{
+    private int speed = 10;
     public T34(ActionField af, BattleField bf) {
         super(af, bf);
     }
