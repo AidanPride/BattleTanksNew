@@ -1,5 +1,6 @@
+import java.awt.*;
 
-public class Bullet{
+public class Bullet implements Drawable, Destoyable{
 
     private int speed = 2;
     private int x;
@@ -47,4 +48,9 @@ public class Bullet{
         this.y = -100;
     }
 
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(new Color(255, 255, 0));
+        g.fillRect(x, y, 14, 14);
+    }
 }
