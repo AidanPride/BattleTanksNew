@@ -1,8 +1,9 @@
-import java.awt.*;
+package Game.Tanks;
 
-/**
- * Created by User on 22.02.2016.
- */
+import java.awt.*;
+import Game.Field.BattleField;
+import Game.Interfaces.Direction;
+import Game.ActionField;
 public class T34 extends AbstractTank{
 
     public T34(ActionField af, BattleField bf) {

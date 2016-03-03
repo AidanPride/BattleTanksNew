@@ -1,10 +1,15 @@
+package Game.Tanks;
+
+import Game.Interfaces.Destoyable;
+import Game.Interfaces.Direction;
+import Game.Interfaces.Drawable;
+import Game.Field.BattleField;
+import Game.*;
 import java.awt.*;
 import java.util.Random;
 
-/**
- * Created by User on 24.02.2016.
- */
-public abstract class AbstractTank implements Destoyable, Drawable{
+
+public abstract class AbstractTank implements Destoyable, Drawable {
     protected int speed = 5;
     protected Direction direction;
     protected int x;

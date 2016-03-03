@@ -1,3 +1,7 @@
+package Game.Tanks;
+import Game.Field.BattleField;
+import Game.Interfaces.Direction;
+import Game.ActionField;
 import java.awt.*;
 
 public class BT7 extends AbstractTank {

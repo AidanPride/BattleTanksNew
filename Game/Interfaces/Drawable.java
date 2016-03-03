@@ -1,3 +1,5 @@
+package Game.Interfaces;
+
 import java.awt.*;
 
 /**

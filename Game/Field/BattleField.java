@@ -1,3 +1,5 @@
+package Game.Field;
+
 import java.util.Random;
 
 public class BattleField {

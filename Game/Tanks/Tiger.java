@@ -1,4 +1,9 @@
+package Game.Tanks;
+
 import java.awt.*;
+import Game.Field.BattleField;
+import Game.Interfaces.Direction;
+import Game.ActionField;
 
 public class Tiger extends AbstractTank{
     private int armor;

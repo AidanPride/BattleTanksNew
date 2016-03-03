@@ -1,9 +1,11 @@
+package Game.Field;
+
+import Game.Interfaces.Drawable;
+
 import java.awt.*;
 
-/**
- * Created by User on 03.03.2016.
- */
-public abstract class AbstractField implements Drawable{
+
+public abstract class AbstractField implements Drawable {
     protected Color fieldColor;
     private BattleField battleField;
 

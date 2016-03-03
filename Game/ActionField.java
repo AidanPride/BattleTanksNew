@@ -1,3 +1,9 @@
+package Game;
+
+import Game.Field.*;
+import Game.Interfaces.Direction;
+import Game.Tanks.*;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -70,12 +76,11 @@ public class ActionField extends  JPanel{
         return false;
     }
 
-    void processTurn(AbstractTank tank) throws  Exception{
+    public void processTurn(AbstractTank tank) throws  Exception{
         repaint();
     }
 
     public void processMove(AbstractTank tank) throws  Exception{
-//        this.tank = tank;
          Direction direction = tank.getDirection();
         tank.turn(direction);
         int i = 1;

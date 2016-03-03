@@ -1,6 +1,13 @@
+package Game;
+
+import Game.Interfaces.Destoyable;
+import Game.Interfaces.Direction;
+import Game.Interfaces.Drawable;
+import Game.Tanks.AbstractTank;
+
 import java.awt.*;
 
-public class Bullet implements Drawable, Destoyable{
+public class Bullet implements Drawable, Destoyable {
 
     private int speed = 2;
     private int x;
