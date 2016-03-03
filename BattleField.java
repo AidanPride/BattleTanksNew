@@ -3,17 +3,18 @@ import java.util.Random;
 public class BattleField {
     final int BF_WIDTH = 590;
     final int BF_HEIGHT = 590;
-    private String[][] battleField = {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
+        private String[][] battleField = {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
             {"B", " ", "B", "B", " ", " ", " ", " ", "B"},
             {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
             {"B", "B", "B", " ", " ", " ", "B", "B", "B"},
-            {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
-            {"B", "B", " ", "B", "B", "B", " ", "B", "B"},
-            {"B", "B", " ", "B", "B", " ", " ", "B", "B"},
+            {"R", "B", "W", "W", "W", "W", "W", "B", "R"},
+            {"R", "B", " ", "B", "B", "B", " ", "B", "R"},
+            {"R", "B", " ", "B", "B", " ", " ", "B", "R"},
             {"B", " ", " ", "B", "B", "B", "B", " ", "B"},
-            {"B", " ", " ", "B", "B", "B", "B", "B", "B"}};
+            {"B", " ", " ", "B", "E", "B", "B", "B", "B"}};
 
     public BattleField() {
+
     }
 
     public int getBF_WIDTH() {

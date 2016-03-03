@@ -11,6 +11,7 @@ public class ActionField extends  JPanel{
     private Direction direction;
 
 
+
    void runTheGame() throws Exception {
         defender.fire();
         defender.fire();
@@ -142,6 +143,8 @@ public class ActionField extends  JPanel{
         agressor = new Tiger(this, battleField,64,64,Direction.RIGHT);
         bullet = new Bullet(-100, -100, defender, Direction.UP);
 
+
+
         JFrame frame = new JFrame("BATTLE FIELD");
         frame.setMinimumSize(new Dimension(battleField.getBF_WIDTH(), battleField.getBF_HEIGHT() + 22));
         frame.setLocationRelativeTo(null);
@@ -175,51 +178,34 @@ public class ActionField extends  JPanel{
 
         for (int j = 0; j < battleField.getDimentionY(); j++) {
             for (int k = 0; k < battleField.getDimentionX(); k++) {
-                if (battleField.scanQuadrant(j , k).equals("B")) {
-                    String coordinates = getQuadrantXY(j + 1, k + 1);
-                    int separator = coordinates.indexOf("_");
-                    int y = Integer.parseInt(coordinates.substring(0, separator));
-                    int x = Integer.parseInt(coordinates.substring(separator + 1));
-                    g.setColor(new Color(0, 0, 255));
-                    g.fillRect(x, y, 64, 64);
+                String coordinates = getQuadrantXY(j + 1, k + 1);
+                int separator = coordinates.indexOf("_");
+                int y = Integer.parseInt(coordinates.substring(0, separator));
+                int x = Integer.parseInt(coordinates.substring(separator + 1));
+
+                    if (battleField.scanQuadrant(j,k).equals("B")) {
+                        Brick brick =new Brick(battleField, x, y);
+                        brick.draw(g);
+                    }
+                    if (battleField.scanQuadrant(j, k).equals( "E")) {
+                        Eagle eagle = new Eagle(battleField, x, y);
+                        eagle.draw(g);
+                    }
+                    if (battleField.scanQuadrant(j, k).equals("R")) {
+                        Rock rock = new Rock(battleField, x, y);
+                        rock.draw(g);
+                    }
+                    if (battleField.scanQuadrant(j, k).equals("W")) {
+                        Water water = new Water(battleField, x, y);
+                        water.draw(g);
+                    }
                 }
             }
-        }
-        // defender
-//        g.setColor(new Color(255, 0, 0));
-//        g.fillRect(tank.getX(), tank.getY(), 64, 64);
-//
-//        g.setColor(new Color(0, 255, 0));
-//        if (tank.getDirection() == Direction.UP) {
-//            g.fillRect(tank.getX() + 20, tank.getY(), 24, 34);
-//        } else if (tank.getDirection() == Direction.DOWN) {
-//            g.fillRect(tank.getX() + 20, tank.getY() + 30, 24, 34);
-//        } else if (tank.getDirection() == Direction.LEFT) {
-//            g.fillRect(tank.getX(), tank.getY() + 20, 34, 24);
-//        } else {
-//            g.fillRect(tank.getX() + 30, tank.getY() + 20, 34, 24);
-//        }
+
          defender.draw(g);
          agressor.draw(g);
          bullet.draw(g);
-         //agressor
-//         g.setColor(new Color(134, 65, 71));
-//         g.fillRect(agressor.getX(), agressor.getY(), 64, 64);
-//
-//         g.setColor(new Color(0, 255, 0));
-//         if (agressor.getDirection() == Direction.UP) {
-//             g.fillRect(agressor.getX() + 20, agressor.getY(), 24, 34);
-//         } else if (agressor.getDirection() == Direction.DOWN) {
-//             g.fillRect(agressor.getX() + 20, agressor.getY() + 30, 24, 34);
-//         } else if (agressor.getDirection() == Direction.LEFT) {
-//             g.fillRect(agressor.getX(), agressor.getY() + 20, 34, 24);
-//         } else {
-//             g.fillRect(agressor.getX() + 30, agressor.getY() + 20, 34, 24);
-//         }
 
-        //bullet
-//        g.setColor(new Color(255, 255, 0));
-//        g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
     }
 
 }
