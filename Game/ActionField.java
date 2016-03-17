@@ -9,16 +9,15 @@ import java.awt.*;
 
 public class ActionField extends  JPanel{
 
-    private boolean COLORDED_MODE = false;
     private BattleField battleField;
     private T34 defender;
-    private Tiger agressor;
+    private BT7 agressor;
     private Bullet bullet;
     private Direction direction;
 
 
-
    void runTheGame() throws Exception {
+       agressor.attack();
         defender.fire();
         defender.fire();
         defender.fire();
@@ -39,8 +38,8 @@ public class ActionField extends  JPanel{
         int x = Integer.parseInt(coordinates.split("_")[1]);
         if ((x >= 0 && x < 9) && (y  >= 0 && y < 9)){
             //check battlefield
-            if (battleField.scanQuadrant(y , x)!= " "){
-                battleField.updateQuadrant(y, x, " ");
+            if ((battleField.scanQuadrant(y , x)!= " ")){
+               battleField.updateQuadrant(y, x, " ");
                 return true;
             }
             //check defender
@@ -54,9 +53,12 @@ public class ActionField extends  JPanel{
             }
             //check agressor
             if(checkInterception(getQuadrant(agressor.getX() , agressor.getY()), coordinates)){
-                agressor.destroy();
-                agressor.respawn();
-                return true;
+                if(bullet.getTank().equals(agressor)){
+                    return false;
+                }else {
+                    agressor.destroy();
+                    return true;
+                }
             }
         }
         return false;
@@ -130,11 +132,6 @@ public class ActionField extends  JPanel{
         return y + "_" + x;
     }
 
-    public String getQuadrantXY(int x, int y) {
-        return (x - 1) * 64 + "_" + (y - 1) * 64;
-    }
-
-
 
 
     // Magic bellow. Do not worry about this now, you will understand everything
@@ -145,7 +142,7 @@ public class ActionField extends  JPanel{
         battleField = new BattleField();
         defender = new T34(this, battleField, 64, 512, Direction.UP);
         String location = battleField.randomTankPosition();
-        agressor = new Tiger(this, battleField,64,64,Direction.RIGHT);
+        agressor = new BT7(this, battleField,64,64,Direction.RIGHT);
         bullet = new Bullet(-100, -100, defender, Direction.UP);
 
 
@@ -161,52 +158,7 @@ public class ActionField extends  JPanel{
      @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        int i = 0;
-        Color cc;
-        for (int v = 0; v < 9; v++) {
-            for (int h = 0; h < 9; h++) {
-                if (COLORDED_MODE) {
-                    if (i % 2 == 0) {
-                        cc = new Color(252, 241, 177);
-                    } else {
-                        cc = new Color(233, 243, 255);
-                    }
-                } else {
-                    cc = new Color(180, 180, 180);
-                }
-                i++;
-                g.setColor(cc);
-                g.fillRect(h * 64, v * 64, 64, 64);
-            }
-        }
-
-        for (int j = 0; j < battleField.getDimentionY(); j++) {
-            for (int k = 0; k < battleField.getDimentionX(); k++) {
-                String coordinates = getQuadrantXY(j + 1, k + 1);
-                int separator = coordinates.indexOf("_");
-                int y = Integer.parseInt(coordinates.substring(0, separator));
-                int x = Integer.parseInt(coordinates.substring(separator + 1));
-
-                    if (battleField.scanQuadrant(j,k).equals("B")) {
-                        Brick brick =new Brick(battleField, x, y);
-                        brick.draw(g);
-                    }
-                    if (battleField.scanQuadrant(j, k).equals( "E")) {
-                        Eagle eagle = new Eagle(battleField, x, y);
-                        eagle.draw(g);
-                    }
-                    if (battleField.scanQuadrant(j, k).equals("R")) {
-                        Rock rock = new Rock(battleField, x, y);
-                        rock.draw(g);
-                    }
-                    if (battleField.scanQuadrant(j, k).equals("W")) {
-                        Water water = new Water(battleField, x, y);
-                        water.draw(g);
-                    }
-                }
-            }
-
+         battleField.draw(g);
          defender.draw(g);
          agressor.draw(g);
          bullet.draw(g);

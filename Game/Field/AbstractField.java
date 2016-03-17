@@ -7,10 +7,10 @@ import java.awt.*;
 
 public abstract class AbstractField implements Drawable {
     protected Color fieldColor;
-    private BattleField battleField;
+    protected BattleField battleField;
 
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
 
     public AbstractField(BattleField battleField, int x, int y) {
         this.battleField = battleField;

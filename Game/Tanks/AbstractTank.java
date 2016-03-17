@@ -90,7 +90,7 @@ public abstract class AbstractTank implements Destoyable, Drawable {
     }
 
     public void moveToQuadrant(int v, int h) throws Exception {
-        String coordinates = af.getQuadrantXY(v, h);
+        String coordinates = bf.getQuadrantXY(v, h);
         int y = Integer.parseInt(coordinates.split("_")[0]);
         int x = Integer.parseInt(coordinates.split("_")[1]);
 

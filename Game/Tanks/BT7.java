@@ -21,5 +21,8 @@ public class BT7 extends AbstractTank {
         towerColor =new Color(0, 255, 0);
         speed = 5;
     }
+    public void attack() throws Exception {
+        this.moveToQuadrant(9 , 5);
+    }
 }
 
