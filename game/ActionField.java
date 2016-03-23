@@ -27,9 +27,12 @@ public class ActionField extends  JPanel{
 
 
    void runTheGame() throws Exception {
-
+       defender.fire();
+       agressor.fire();
+       defender.move();
        agressor.move();
-       agressor.move();
+       defender.fire();
+       agressor.attack();
     }
 
     private boolean processInterception() throws Exception{
@@ -186,10 +189,17 @@ public class ActionField extends  JPanel{
     public ActionField() throws Exception {
         battleField = new BattleField();
         defender = new T34(this, battleField, 64, 512, Direction.UP);
+
         String location = battleField.randomTankPosition();
         int y= Integer.parseInt(location.split("_")[0]);
         int x= Integer.parseInt(location.split("_")[1]);
-        agressor = new BT7(this, battleField,x,y,Direction.RIGHT);
+        if (x < 256) {
+            direction = Direction.RIGHT;
+        } else {
+            direction = Direction.LEFT;
+        }
+        agressor = new BT7(this, battleField, x, y, direction);
+
         bullet = new Bullet(-100, -100, defender, Direction.UP);
 
         JFrame frame = new JFrame("BATTLE FIELD");
