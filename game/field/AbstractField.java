@@ -33,4 +33,11 @@ public abstract class AbstractField implements BfObject {
 
     }
 
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
+        this.img = img;
+    }
 }

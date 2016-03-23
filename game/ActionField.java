@@ -21,6 +21,7 @@ public class ActionField extends  JPanel{
     private BT7 agressor;
 //    private Tiger agressor;
     private Bullet bullet;
+    private Direction direction;
 
 
 
@@ -88,6 +89,18 @@ public class ActionField extends  JPanel{
     }
 
     public void processTurn(AbstractTank tank) throws  Exception{
+        direction = tank.getDirection();
+        String imgName = null;
+        if (direction == Direction.UP) {
+            imgName = "tankUP.png";
+        } else if (direction == Direction.DOWN) {
+            imgName = "tankDown.png";
+        } else if (direction == Direction.LEFT) {
+            imgName = "tankLeft.png";
+        } else if (direction == Direction.RIGHT) {
+            imgName = "tankRight.png";
+        }
+        tank.setImgName(imgName);
         repaint();
     }
 

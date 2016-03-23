@@ -25,7 +25,7 @@ public class BT7 extends AbstractTank {
         tankColor = new Color(198, 20, 191);
         towerColor =new Color(0, 255, 0);
         speed = 5;
-        imgName = "tank.png";
+        imgName = "tankRight.png";
         try {
             img = ImageIO.read(new File(imgName));
         } catch (IOException e) {

@@ -9,8 +9,11 @@ import game.interfaces.Destoyable;
 import game.interfaces.Direction;
 import game.interfaces.Drawable;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -37,7 +40,6 @@ public abstract class AbstractTank implements Destoyable, Drawable {
         this.x = x;
         this.y = y;
         this.direction = direction;
-
     }
 
     public Color getTankColor() {
@@ -67,6 +69,27 @@ public abstract class AbstractTank implements Destoyable, Drawable {
     public void updateY(int y) {
         this.y += y;
 
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
+        this.img = img;
+    }
+
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+        try {
+            img = ImageIO.read(new File(imgName));
+        } catch (IOException e) {
+            System.out.println("There is no file");
+        }
     }
 
     public void turn(Direction direction) throws Exception {
@@ -187,4 +210,5 @@ public abstract class AbstractTank implements Destoyable, Drawable {
             }
         });
     }
+
 }
