@@ -25,5 +25,5 @@ public abstract class AbstractField implements BfObject {
 
     public void destroy(){
 
-    }
+            }
 }
