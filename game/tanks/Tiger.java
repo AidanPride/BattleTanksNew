@@ -1,9 +1,13 @@
 package game.tanks;
 
+import game.ActionField;
+import game.field.BattleField;
+import game.interfaces.Direction;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
-import game.interfaces.*;
-import game.field.*;
-import game.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Tiger extends AbstractTank{
     private int armor;
@@ -15,6 +19,12 @@ public class Tiger extends AbstractTank{
         tankColor = new Color(134, 65, 71);
         towerColor =new Color(0, 255, 0);
         speed = 14;
+        imgName = "tank.png";
+        try {
+            img = ImageIO.read(new File(imgName));
+        } catch (IOException e) {
+            System.out.println("There is no file");
+        }
 
     }
 

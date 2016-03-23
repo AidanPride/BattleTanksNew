@@ -1,10 +1,16 @@
 package game.tanks;
 
 
-import game.interfaces.*;
-import game.field.*;
-import game.*;
+import game.ActionField;
+import game.Bullet;
+import game.field.BattleField;
+import game.field.Eagle;
+import game.interfaces.Destoyable;
+import game.interfaces.Direction;
+import game.interfaces.Drawable;
+
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.util.Random;
 
 
@@ -17,6 +23,8 @@ public abstract class AbstractTank implements Destoyable, Drawable {
     protected BattleField bf;
     protected Color tankColor;
     protected Color towerColor;
+    protected Image img;
+    protected String imgName;
 
     public AbstractTank(ActionField af, BattleField bf) {
         this.af = af;
@@ -29,6 +37,7 @@ public abstract class AbstractTank implements Destoyable, Drawable {
         this.x = x;
         this.y = y;
         this.direction = direction;
+
     }
 
     public Color getTankColor() {
@@ -157,19 +166,25 @@ public abstract class AbstractTank implements Destoyable, Drawable {
     }
     @Override
     public void draw(Graphics g) {
-        g.setColor(tankColor);
- 
-         g.fillRect(this.getX(), this.getY(), 64, 64);
-
-         g.setColor(towerColor);
-         if (this.getDirection() == Direction.UP) {
-             g.fillRect(this.getX() + 20, this.getY(), 24, 34);
-         } else if (this.getDirection() == Direction.DOWN) {
-             g.fillRect(this.getX() + 20, this.getY() + 30, 24, 34);
-         } else if (this.getDirection() == Direction.LEFT) {
-             g.fillRect(this.getX(), this.getY() + 20, 34, 24);
-         } else {
-             g.fillRect(this.getX() + 30, this.getY() + 20, 34, 24);
-         }
+//        g.setColor(tankColor);
+//
+//         g.fillRect(this.getX(), this.getY(), 64, 64);
+//
+//         g.setColor(towerColor);
+//         if (this.getDirection() == Direction.UP) {
+//             g.fillRect(this.getX() + 20, this.getY(), 24, 34);
+//         } else if (this.getDirection() == Direction.DOWN) {
+//             g.fillRect(this.getX() + 20, this.getY() + 30, 24, 34);
+//         } else if (this.getDirection() == Direction.LEFT) {
+//             g.fillRect(this.getX(), this.getY() + 20, 34, 24);
+//         } else {
+//             g.fillRect(this.getX() + 30, this.getY() + 20, 34, 24);
+//         }
+        g.drawImage(img, x, y, new ImageObserver() {
+            @Override
+            public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+                return false;
+            }
+        });
     }
 }

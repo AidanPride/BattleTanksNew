@@ -6,9 +6,6 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 
 public abstract class AbstractField implements BfObject {
-    protected Color fieldColor;
-    protected BattleField battleField;
-
     protected int x;
     protected int y;
 
@@ -16,7 +13,6 @@ public abstract class AbstractField implements BfObject {
     protected String imgName;
 
     public AbstractField(int x, int y) {
-        this.battleField = battleField;
         this.x = x;
         this.y = y;
 

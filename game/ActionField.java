@@ -1,9 +1,15 @@
 package game;
 
-import game.field.*;
+import game.field.BattleField;
+import game.field.Rock;
+import game.field.Simple;
+import game.field.Water;
 import game.interfaces.BfObject;
 import game.interfaces.Direction;
-import game.tanks.*;
+import game.tanks.AbstractTank;
+import game.tanks.BT7;
+import game.tanks.T34;
+import game.tanks.Tiger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +25,12 @@ public class ActionField extends  JPanel{
 
 
    void runTheGame() throws Exception {
+       defender.fire();
+       agressor.fire();
+       defender.fire();
+       agressor.fire();
+       defender.fire();
+       defender.fire();
        agressor.attack();
     }
 
@@ -27,7 +39,7 @@ public class ActionField extends  JPanel{
         int y = Integer.parseInt(coordinates.split("_")[0]);
         int x = Integer.parseInt(coordinates.split("_")[1]);
         BfObject bfObject = battleField.scanObjectQuadrant(y , x);
-        if ((x >= 0 && x < 9) && (y  >= 0 && y < 9)){
+        if ((x >= 0 && x <= 8) && (y >= 0 && y <= 8)) {
             //check battlefield
             if(bfObject instanceof Rock){
                 if (bullet.getTank() instanceof Tiger){
@@ -114,7 +126,7 @@ public class ActionField extends  JPanel{
         int y = Integer.parseInt(coordinates.split("_")[0]);
         int x = Integer.parseInt(coordinates.split("_")[1]);
         BfObject bfObject = battleField.scanObjectQuadrant(y , x);
-        while (bullet.getX() > -14 && bullet.getX() < 590 && bullet.getY() > -14 && bullet.getY() < 590) {
+        while (bullet.getX() > 0 && bullet.getX() < 562 && bullet.getY() > 0 && bullet.getY() < 562) {
             if (bullet.getDirection() == Direction.UP) {
                 bullet.updateY(-1);
             }
@@ -166,6 +178,10 @@ public class ActionField extends  JPanel{
          defender.draw(g);
          agressor.draw(g);
          bullet.draw(g);
+
+    }
+
+    public void rotateObject(Object object, Direction direction) {
 
     }
 
