@@ -1,4 +1,7 @@
 package game.interfaces;
 
-public interface BfObject extends Drawable, Destoyable{
+/**
+ * Created by User on 23.03.2016.
+ */
+public interface BfObject extends Destoyable, Drawable {
 }
