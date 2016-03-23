@@ -4,10 +4,11 @@ package game.tanks;
 import game.ActionField;
 import game.Bullet;
 import game.field.BattleField;
+import game.field.Brick;
 import game.field.Eagle;
-import game.interfaces.Destoyable;
+import game.interfaces.BfObject;
 import game.interfaces.Direction;
-import game.interfaces.Drawable;
+import game.interfaces.Tank;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.util.Random;
 
 
-public abstract class AbstractTank implements Destoyable, Drawable {
+public abstract class AbstractTank implements Tank {
     protected int speed = 5;
     protected Direction direction;
     protected int x;
@@ -159,8 +160,10 @@ public abstract class AbstractTank implements Destoyable, Drawable {
         for (int i = 2; i <= 9; i++) {
             moveToQuadrant(1, i);
             turn(Direction.DOWN);
+            BfObject bfObject;
             for (int k = 1; k <= 8; k++) {
-                if (bf.scanQuadrant(k, i - 1) == "B") {
+                bfObject = bf.scanObjectQuadrant(k, i - 1);
+                if (bfObject instanceof Brick) {
                     fire();
                 }
             }

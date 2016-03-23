@@ -6,7 +6,7 @@ import game.field.Simple;
 import game.field.Water;
 import game.interfaces.BfObject;
 import game.interfaces.Direction;
-import game.tanks.AbstractTank;
+import game.interfaces.Tank;
 import game.tanks.BT7;
 import game.tanks.T34;
 import game.tanks.Tiger;
@@ -22,17 +22,14 @@ public class ActionField extends  JPanel{
 //    private Tiger agressor;
     private Bullet bullet;
     private Direction direction;
+    private Tank tank;
 
 
 
    void runTheGame() throws Exception {
-       defender.fire();
-       agressor.fire();
-       defender.fire();
-       agressor.fire();
-       defender.fire();
-       defender.fire();
-       agressor.attack();
+
+       agressor.move();
+       agressor.move();
     }
 
     private boolean processInterception() throws Exception{
@@ -88,7 +85,7 @@ public class ActionField extends  JPanel{
         return false;
     }
 
-    public void processTurn(AbstractTank tank) throws  Exception{
+    public void processTurn(Tank tank) throws Exception {
         direction = tank.getDirection();
         String imgName = null;
         if (direction == Direction.UP) {
@@ -104,15 +101,34 @@ public class ActionField extends  JPanel{
         repaint();
     }
 
-    public void processMove(AbstractTank tank) throws  Exception{
+    public void processMove(Tank tank) throws Exception {
          Direction direction = tank.getDirection();
         tank.turn(direction);
         String quadrant = getQuadrant(tank.getX(), tank.getY());
         int y= Integer.parseInt(quadrant.split("_")[0]);
         int x= Integer.parseInt(quadrant.split("_")[1]);
         BfObject bfObject = battleField.scanObjectQuadrant(y , x);
+
         if(tank.getY() >= 0&& tank.getY() <= 512&& tank.getX() >= 0&& tank.getX() <= 512
                 &&(bfObject instanceof Simple)) {
+
+            // check next quadrant
+            if (direction == Direction.UP && tank.getY() >= 1) {
+                y--;
+            } else if (direction == Direction.DOWN && tank.getY() <= 511) {
+                y++;
+            } else if (direction == Direction.RIGHT && tank.getX() <= 511) {
+                x++;
+            } else if (direction == Direction.LEFT && tank.getX() >= 1) {
+                x--;
+            }
+            BfObject bfobject = battleField.scanObjectQuadrant(y, x);
+            if (!(bfobject instanceof Simple)) {
+                System.out.println("Illegal move to " + tank.getX() + " " + tank.getY());
+                return;
+            }
+
+            //move
             for (int i=1; i<= 64; i++) {
                 if (direction == Direction.UP && tank.getY() >= 0) {
                     tank.updateY(-1);
@@ -191,10 +207,6 @@ public class ActionField extends  JPanel{
          defender.draw(g);
          agressor.draw(g);
          bullet.draw(g);
-
-    }
-
-    public void rotateObject(Object object, Direction direction) {
 
     }
 
