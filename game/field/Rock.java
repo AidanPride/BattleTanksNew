@@ -1,13 +1,9 @@
 package game.field;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by User on 03.03.2016.
- */
 public class Rock extends AbstractField {
 
     public Rock(int x, int y) {

@@ -18,8 +18,8 @@ public class ActionField extends  JPanel{
 
     private BattleField battleField;
     private T34 defender;
-    private BT7 agressor;
-//    private Tiger agressor;
+    private BT7 agressor1;
+    private Tiger agressor;
     private Bullet bullet;
     private Direction direction;
     private Tank tank;
@@ -198,7 +198,7 @@ public class ActionField extends  JPanel{
         } else {
             direction = Direction.LEFT;
         }
-        agressor = new BT7(this, battleField, x, y, direction);
+        agressor = new Tiger(this, battleField, x, y, direction);
 
         bullet = new Bullet(-100, -100, defender, Direction.UP);
 
