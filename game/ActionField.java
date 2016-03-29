@@ -18,20 +18,20 @@ public class ActionField extends  JPanel{
 
     private BattleField battleField;
     private T34 defender;
-    private BT7 agressor1;
-    private Tiger agressor;
+    private BT7 agressor;
+    private Tiger agressor1;
     private Bullet bullet;
     private Direction direction;
-    private Tank tank;
-
 
 
    void runTheGame() throws Exception {
+       agressor1.findDefender();
        defender.fire();
        agressor.fire();
        defender.move();
        agressor.move();
        defender.fire();
+       agressor1.findDefender();
        agressor.attack();
     }
 
@@ -58,6 +58,7 @@ public class ActionField extends  JPanel{
                     return false;
                   }else {
                     defender.destroy();
+                    defender.respawn();
                     return true;
                   }
             }
@@ -67,6 +68,17 @@ public class ActionField extends  JPanel{
                     return false;
                 }else {
                     agressor.destroy();
+                    agressor.respawn();
+                    return true;
+                }
+            }
+            //check agressor1
+            if (checkInterception(getQuadrant(agressor1.getX(), agressor1.getY()), coordinates)) {
+                if (bullet.getTank().equals(agressor1)) {
+                    return false;
+                } else {
+                    agressor1.destroy();
+                    agressor1.respawn();
                     return true;
                 }
             }
@@ -90,7 +102,7 @@ public class ActionField extends  JPanel{
 
     public void processTurn(Tank tank) throws Exception {
         direction = tank.getDirection();
-        String imgName = null;
+        String imgName = tank.getImgName();
         if (direction == Direction.UP) {
             imgName = "tankUP.png";
         } else if (direction == Direction.DOWN) {
@@ -189,17 +201,8 @@ public class ActionField extends  JPanel{
     public ActionField() throws Exception {
         battleField = new BattleField();
         defender = new T34(this, battleField, 64, 512, Direction.UP);
-
-        String location = battleField.randomTankPosition();
-        int y= Integer.parseInt(location.split("_")[0]);
-        int x= Integer.parseInt(location.split("_")[1]);
-        if (x < 256) {
-            direction = Direction.RIGHT;
-        } else {
-            direction = Direction.LEFT;
-        }
-        agressor = new Tiger(this, battleField, x, y, direction);
-
+        agressor = new BT7(this, battleField, 0, 0, direction);
+        agressor1 = new Tiger(this, battleField, 512, 0, direction);
         bullet = new Bullet(-100, -100, defender, Direction.UP);
 
         JFrame frame = new JFrame("BATTLE FIELD");
@@ -216,8 +219,11 @@ public class ActionField extends  JPanel{
          battleField.draw(g);
          defender.draw(g);
          agressor.draw(g);
+         agressor1.draw(g);
          bullet.draw(g);
-
     }
 
+    public T34 getDefender() {
+        return defender;
+    }
 }

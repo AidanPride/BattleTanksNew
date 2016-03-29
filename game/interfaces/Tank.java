@@ -9,6 +9,8 @@ public interface Tank extends Drawable, Destoyable {
 
     int getY();
 
+    String getImgName();
+
     void updateX(int x);
 
     void updateY(int y);
