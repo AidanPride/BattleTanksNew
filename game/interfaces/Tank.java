@@ -9,15 +9,16 @@ public interface Tank extends Drawable, Destoyable {
 
     int getY();
 
-    String getImgName();
-
     void updateX(int x);
 
     void updateY(int y);
 
-    void setImgName(String imgName);
-
+    void move() throws Exception;
     void turn(Direction direction) throws Exception;
+
+    void fire() throws Exception;
+
+    void moveToCoordinates(Tank tank) throws Exception;
 
 
 }

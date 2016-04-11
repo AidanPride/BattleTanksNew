@@ -11,18 +11,21 @@ public class BattleField implements Drawable {
     private boolean COLORDED_MODE = false;
     final int BF_WIDTH = 590;
     final int BF_HEIGHT = 590;
-    private String[][] battleFieldString = {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
+    private String[][] battleFieldString =
+            {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
             {"B", " ", "B", "B", " ", " ", " ", " ", "B"},
             {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
             {"B", "B", "B", " ", " ", " ", "B", "B", "B"},
             {"R", "B", "W", "W", "W", "W", "W", "B", "R"},
             {"R", "B", " ", "B", "B", "B", " ", "B", "R"},
-            {"R", "B", " ", "B", "R", " ", " ", "B", "R"},
-            {"B", " ", " ", "B", "R", "B", "B", " ", "B"},
+                    {"R", "B", " ", "B", "B", " ", " ", "B", "R"},
+                    {"B", " ", " ", "B", "B", "B", "B", " ", "B"},
             {"B", " ", " ", "B", "E", "B", "B", "B", "B"}};
     private BfObject[][] battleField = new BfObject[9][9];
 
     public BattleField() {
+        Maps m = new Maps();
+        battleFieldString = m.map();
         drawBattlefield();
     }
 
@@ -77,13 +80,13 @@ public class BattleField implements Drawable {
     }
 
     public String getQuadrantXY(int x, int y) {
-        return (x - 1) * 64 + "_" + (y - 1) * 64;
+        return (x) * 64 + "_" + (y) * 64;
     }
 
     private void drawBattlefield() {
         for (int j = 0; j < 9; j++) {
             for (int k = 0; k < 9; k++) {
-                String coordinates = getQuadrantXY(j + 1, k + 1);
+                String coordinates = getQuadrantXY(j, k);
                 int separator = coordinates.indexOf("_");
                 int y = Integer.parseInt(coordinates.substring(0, separator));
                 int x = Integer.parseInt(coordinates.substring(separator + 1));
@@ -111,5 +114,55 @@ public class BattleField implements Drawable {
                 battleField[j][k].draw(g);
             }
         }
+    }
+
+    private class Maps {
+        String[][] b1 =
+                {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
+                        {"B", " ", "B", "B", " ", " ", " ", " ", "B"},
+                        {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
+                        {"B", "B", "B", " ", " ", " ", "B", "B", "B"},
+                        {"R", "B", "W", "W", "W", "W", "W", "B", "R"},
+                        {"R", "B", " ", "B", "B", "B", " ", "B", "R"},
+                        {"R", "B", " ", "B", "B", " ", " ", "B", "R"},
+                        {"B", " ", " ", "B", "B", "B", "B", " ", "B"},
+                        {"B", " ", " ", "B", "E", "B", "B", "B", "B"}};
+
+        String[][] b2 =
+                {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
+                        {"B", " ", "B", "B", " ", " ", "B", " ", "B"},
+                        {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
+                        {"B", "B", "B", " ", " ", " ", "B", "B", "B"},
+                        {"B", "B", "B", "B", "B", "B", "B", "B", "B"},
+                        {"B", "B", " ", "B", "B", "B", " ", "B", "B"},
+                        {"B", "B", " ", "B", "B", "B", "B", "B", "B"},
+                        {"B", " ", " ", "B", "B", "B", "B", " ", "B"},
+                        {"B", " ", " ", "B", "E", "B", "B", "B", "B"}};
+
+        String[][] b3 =
+                {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
+                        {"B", " ", "B", "B", " ", " ", " ", " ", "B"},
+                        {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
+                        {"B", "B", "B", " ", " ", " ", "B", "B", "B"},
+                        {"R", "B", "W", "W", "W", "W", "W", "B", "R"},
+                        {"R", "B", " ", "B", "B", "B", " ", "B", "R"},
+                        {"R", "B", " ", "B", "B", " ", " ", "B", "R"},
+                        {"B", " ", " ", "B", "R", "B", "B", " ", "B"},
+                        {"B", " ", " ", "B", "E", "B", "B", "B", "B"}};
+
+        public Maps() {
+        }
+
+        private String[][] map() {
+            Random r = new Random();
+            int map = r.nextInt(3);
+            if (map == 1) {
+                return b1;
+            } else if (map == 2) {
+                return b2;
+            } else
+                return b3;
+        }
+
     }
 }

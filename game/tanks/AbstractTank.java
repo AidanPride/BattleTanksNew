@@ -4,16 +4,11 @@ package game.tanks;
 import game.ActionField;
 import game.Bullet;
 import game.field.BattleField;
-import game.field.Brick;
-import game.interfaces.BfObject;
 import game.interfaces.Direction;
 import game.interfaces.Tank;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
 
@@ -24,8 +19,7 @@ public abstract class AbstractTank implements Tank {
     protected int y;
     protected ActionField af;
     protected BattleField bf;
-    protected Image img;
-    protected String imgName;
+    protected Image[] images;
 
     public AbstractTank(ActionField af, BattleField bf) {
         this.af = af;
@@ -38,6 +32,7 @@ public abstract class AbstractTank implements Tank {
         this.x = x;
         this.y = y;
         this.direction = direction;
+
     }
 
 
@@ -66,30 +61,10 @@ public abstract class AbstractTank implements Tank {
 
     }
 
-    public Image getImg() {
-        return img;
-    }
-
-    public void setImg(Image img) {
-        this.img = img;
-    }
-
-    public String getImgName() {
-        return imgName;
-    }
-
-    public void setImgName(String imgName) {
-        this.imgName = imgName;
-        try {
-            img = ImageIO.read(new File(imgName));
-        } catch (IOException e) {
-            System.out.println("There is no file");
-        }
-    }
-
     public void turn(Direction direction) throws Exception {
         this.direction = direction;
-        af.processTurn(this);
+        // af.processTurn(this);
+        af.repaint();
     }
 
     public void move() throws Exception {
@@ -184,22 +159,6 @@ public abstract class AbstractTank implements Tank {
             }
         }
     }
-    public void clean() throws Exception {
-        moveToQuadrant(1, 1);
-        for (int i = 2; i <= 9; i++) {
-            moveToQuadrant(1, i);
-            turn(Direction.DOWN);
-            BfObject bfObject;
-            for (int k = 1; k <= 8; k++) {
-                bfObject = bf.scanObjectQuadrant(k, i - 1);
-                if (bfObject instanceof Brick) {
-                    fire();
-                }
-            }
-            turn(Direction.LEFT);
-
-        }
-    }
 
     public void destroy() {
         this.x = -100;
@@ -215,11 +174,12 @@ public abstract class AbstractTank implements Tank {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(img, x, y, new ImageObserver() {
-            @Override
-            public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-                return false;
-            }
+        g.drawImage(images[getDirection().getId()], x, y,
+                new ImageObserver() {
+                    @Override
+                    public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+                        return false;
+                    }
         });
     }
 

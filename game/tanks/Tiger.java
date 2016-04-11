@@ -5,37 +5,41 @@ import game.field.BattleField;
 import game.interfaces.Direction;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
 public class Tiger extends AbstractTank{
     private int armor;
-
+    private String IMG_UP = "TigerUP.png";
+    private String IMG_DOWN = "TigerDown.png";
+    private String IMG_LEFT = "TigerLeft.png";
+    private String IMG_RIGHT = "TigerRight.png";
 
     public Tiger(ActionField af, BattleField bf) {
         super(af, bf);
         armor=1;
         speed = 14;
+        setImages();
     }
 
     public Tiger(ActionField af, BattleField bf, int x, int y, Direction direction) {
         super(af, bf, x, y, direction);
         armor=1;
         speed = 14;
-        imgName = "tankLeft.png";
+        setImages();
+    }
+
+    private void setImages() {
+        images = new Image[4];
         try {
-            img = ImageIO.read(new File(imgName));
+            images[0] = ImageIO.read(new File(IMG_UP));
+            images[1] = ImageIO.read(new File(IMG_DOWN));
+            images[2] = ImageIO.read(new File(IMG_LEFT));
+            images[3] = ImageIO.read(new File(IMG_RIGHT));
         } catch (IOException e) {
             System.out.println("There is no file");
         }
-    }
-
-    public int getArmor() {
-        return armor;
-    }
-
-    public void setArmor(int armor) {
-        this.armor = armor;
     }
 
     @Override
@@ -47,11 +51,5 @@ public class Tiger extends AbstractTank{
             super.destroy();
         }
     }
-
-    public void findDefender() throws Exception {
-        T34 defender = af.getDefender();
-        moveToCoordinates(defender);
-    }
-
 
 }

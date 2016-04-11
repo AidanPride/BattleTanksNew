@@ -7,6 +7,7 @@ import game.field.Water;
 import game.interfaces.BfObject;
 import game.interfaces.Direction;
 import game.interfaces.Tank;
+import game.tanks.AI;
 import game.tanks.BT7;
 import game.tanks.T34;
 import game.tanks.Tiger;
@@ -25,14 +26,10 @@ public class ActionField extends  JPanel{
 
 
    void runTheGame() throws Exception {
-       agressor1.findDefender();
-       defender.fire();
-       agressor.fire();
-       defender.move();
-       agressor.move();
-       defender.fire();
-       agressor1.findDefender();
-       agressor.attack();
+       AI AiBT7 = new AI(this, battleField, agressor);
+       AI AiTiger = new AI(this, battleField, agressor1);
+       AiTiger.findDefender();
+       AiBT7.attackHeadQuater();
     }
 
     private boolean processInterception() throws Exception{
@@ -100,32 +97,58 @@ public class ActionField extends  JPanel{
         return false;
     }
 
-    public void processTurn(Tank tank) throws Exception {
-        direction = tank.getDirection();
-        String imgName = tank.getImgName();
-        if (direction == Direction.UP) {
-            imgName = "tankUP.png";
-        } else if (direction == Direction.DOWN) {
-            imgName = "tankDown.png";
-        } else if (direction == Direction.LEFT) {
-            imgName = "tankLeft.png";
-        } else if (direction == Direction.RIGHT) {
-            imgName = "tankRight.png";
-        }
-        tank.setImgName(imgName);
-        repaint();
-    }
+//    public void processTurn(Tank tank) throws Exception {
+//        direction = tank.getDirection();
+//        String imgName = tank.getImgName();
+//        if (direction == Direction.UP) {
+//            imgName = "tankUP.png";
+//        } else if (direction == Direction.DOWN) {
+//            imgName = "tankDown.png";
+//        } else if (direction == Direction.LEFT) {
+//            imgName = "tankLeft.png";
+//        } else if (direction == Direction.RIGHT) {
+//            imgName = "tankRight.png";
+//        }
+//        tank.setImgName(imgName);
+//        repaint();
+//    }
 
-    public void processMove(Tank tank) throws Exception {
-         Direction direction = tank.getDirection();
+    public BfObject nextQuadrant(Tank tank) throws Exception {
+        Direction direction = tank.getDirection();
         tank.turn(direction);
         String quadrant = getQuadrant(tank.getX(), tank.getY());
-        int y= Integer.parseInt(quadrant.split("_")[0]);
-        int x= Integer.parseInt(quadrant.split("_")[1]);
-        BfObject bfObject = battleField.scanObjectQuadrant(y , x);
+        int y = Integer.parseInt(quadrant.split("_")[0]);
+        int x = Integer.parseInt(quadrant.split("_")[1]);
+        BfObject bfObject = battleField.scanObjectQuadrant(y, x);
 
-        if(tank.getY() >= 0&& tank.getY() <= 512&& tank.getX() >= 0&& tank.getX() <= 512
-                &&(bfObject instanceof Simple)) {
+        if (tank.getY() >= 0 && tank.getY() <= 512 && tank.getX() >= 0 && tank.getX() <= 512
+                && (bfObject instanceof Simple)) {
+
+            // check next quadrant
+            if (direction == Direction.UP && tank.getY() >= 1) {
+                y--;
+            } else if (direction == Direction.DOWN && tank.getY() <= 511) {
+                y++;
+            } else if (direction == Direction.RIGHT && tank.getX() <= 511) {
+                x++;
+            } else if (direction == Direction.LEFT && tank.getX() >= 1) {
+                x--;
+            }
+            bfObject = battleField.scanObjectQuadrant(y, x);
+        }
+        return bfObject;
+    }
+
+    public boolean nextQuadrantIsFree(Tank tank) throws Exception {
+        Direction direction = tank.getDirection();
+        tank.turn(direction);
+        String quadrant = getQuadrant(tank.getX(), tank.getY());
+        int y = Integer.parseInt(quadrant.split("_")[0]);
+        int x = Integer.parseInt(quadrant.split("_")[1]);
+        BfObject bfObject = battleField.scanObjectQuadrant(y, x);
+
+        if (tank.getY() >= 0 && tank.getY() <= 512 && tank.getX() >= 0 && tank.getX() <= 512
+                && (bfObject instanceof Simple)) {
 
             // check next quadrant
             if (direction == Direction.UP && tank.getY() >= 1) {
@@ -138,7 +161,26 @@ public class ActionField extends  JPanel{
                 x--;
             }
             BfObject bfobject = battleField.scanObjectQuadrant(y, x);
-            if (!(bfobject instanceof Simple)) {
+            if (bfobject instanceof Simple) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public void processMove(Tank tank) throws Exception {
+        Direction direction = tank.getDirection();
+        tank.turn(direction);
+        String quadrant = getQuadrant(tank.getX(), tank.getY());
+        int y = Integer.parseInt(quadrant.split("_")[0]);
+        int x = Integer.parseInt(quadrant.split("_")[1]);
+        BfObject bfObject = battleField.scanObjectQuadrant(y, x);
+
+        if (tank.getY() >= 0 && tank.getY() <= 512 && tank.getX() >= 0 && tank.getX() <= 512
+                && (bfObject instanceof Simple)) {
+
+            if (!nextQuadrantIsFree(tank)) {
                 System.out.println("Illegal move to " + tank.getX() + " " + tank.getY());
                 return;
             }
@@ -169,7 +211,6 @@ public class ActionField extends  JPanel{
         String coordinates = getQuadrant(bullet.getX() , bullet.getY());
         int y = Integer.parseInt(coordinates.split("_")[0]);
         int x = Integer.parseInt(coordinates.split("_")[1]);
-        BfObject bfObject = battleField.scanObjectQuadrant(y , x);
         while (bullet.getX() > 0 && bullet.getX() < 562 && bullet.getY() > 0 && bullet.getY() < 562) {
             if (bullet.getDirection() == Direction.UP) {
                 bullet.updateY(-1);
@@ -201,8 +242,8 @@ public class ActionField extends  JPanel{
     public ActionField() throws Exception {
         battleField = new BattleField();
         defender = new T34(this, battleField, 64, 512, Direction.UP);
-        agressor = new BT7(this, battleField, 0, 0, direction);
-        agressor1 = new Tiger(this, battleField, 512, 0, direction);
+        agressor = new BT7(this, battleField, 0, 0, Direction.RIGHT);
+        agressor1 = new Tiger(this, battleField, 512, 0, Direction.LEFT);
         bullet = new Bullet(-100, -100, defender, Direction.UP);
 
         JFrame frame = new JFrame("BATTLE FIELD");
