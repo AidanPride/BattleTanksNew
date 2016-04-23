@@ -43,9 +43,9 @@ public class AI {
 
     public void attackHeadQuater() throws Exception {
         PathFinder pathFinder = new PathFinder(createlabirinth());
-        Point start = new Point(tank.getLocation());// Hачальная точка
-        Point end = new Point(new int[]{8, 4});//Конечная точка
-        Point[] path = pathFinder.find(start, end); // Hайдем путь
+        Point start = new Point(tank.getLocation());
+        Point end = new Point(new int[]{8, 4});
+        Point[] path = pathFinder.find(start, end); 
         List<Direction> directionList = new ArrayList<>();
         for (int i = 0; i < path.length - 1; i++) {
             if (path[i + 1].getX() < path[i].getX()) {
@@ -69,9 +69,9 @@ public class AI {
     public void findDefender() throws Exception {
         T34 defender = af.getDefender();
         PathFinder pathFinder = new PathFinder(createlabirinth());
-        Point start = new Point(tank.getLocation());// Hачальная точка
-        Point end = new Point(defender.getLocation());//Конечная точка
-        Point[] path = pathFinder.find(start, end); // Hайдем путь
+        Point start = new Point(tank.getLocation());
+        Point end = new Point(defender.getLocation());
+        Point[] path = pathFinder.find(start, end); 
         List<Direction> directionList = new ArrayList<>();
         for (int i = 0; i < path.length - 1; i++) {
             if (path[i + 1].getX() < path[i].getX()) {
