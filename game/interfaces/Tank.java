@@ -20,5 +20,8 @@ public interface Tank extends Drawable, Destoyable {
 
     void moveToCoordinates(Tank tank) throws Exception;
 
+    int[] getLocation();
+
+    void setLocation(int[] location);
 
 }

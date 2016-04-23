@@ -20,32 +20,38 @@ public class ActionField extends  JPanel{
     private BattleField battleField;
     private T34 defender;
     private BT7 agressor;
-    private Tiger agressor1;
+    private Tiger atacker;
     private Bullet bullet;
     private Direction direction;
 
 
    void runTheGame() throws Exception {
        AI AiBT7 = new AI(this, battleField, agressor);
-       AI AiTiger = new AI(this, battleField, agressor1);
+       AI AiTiger = new AI(this, battleField, atacker);
        AiTiger.findDefender();
        AiBT7.attackHeadQuater();
     }
 
     private boolean processInterception() throws Exception{
-        String coordinates = getQuadrant(bullet.getX() , bullet.getY());
-        int y = Integer.parseInt(coordinates.split("_")[0]);
-        int x = Integer.parseInt(coordinates.split("_")[1]);
+        int[] coordinates = getQuadrant(bullet.getX(), bullet.getY());
+        int y = coordinates[0];
+        int x = coordinates[1];
         BfObject bfObject = battleField.scanObjectQuadrant(y , x);
         if ((x >= 0 && x <= 8) && (y >= 0 && y <= 8)) {
             //check battlefield
             if(bfObject instanceof Rock){
                 if (bullet.getTank() instanceof Tiger){
+                    bfObject.destroy();
+                    repaint();
+                    Thread.sleep(10);
                     battleField.destroy(y, x);
                 }
                 return true;
             }
             if (!(bfObject instanceof Simple)&&!(bfObject instanceof Water)){
+                bfObject.destroy();
+                repaint();
+                Thread.sleep(300);
                battleField.destroy(y, x);
                 return true;
             }
@@ -69,13 +75,13 @@ public class ActionField extends  JPanel{
                     return true;
                 }
             }
-            //check agressor1
-            if (checkInterception(getQuadrant(agressor1.getX(), agressor1.getY()), coordinates)) {
-                if (bullet.getTank().equals(agressor1)) {
+            //check atacker
+            if (checkInterception(getQuadrant(atacker.getX(), atacker.getY()), coordinates)) {
+                if (bullet.getTank().equals(atacker)) {
                     return false;
                 } else {
-                    agressor1.destroy();
-                    agressor1.respawn();
+                    atacker.destroy();
+                    atacker.respawn();
                     return true;
                 }
             }
@@ -83,12 +89,12 @@ public class ActionField extends  JPanel{
         return false;
     }
 
-    public boolean checkInterception(String object, String quadrant){
-        int oy = Integer.parseInt(object.split("_")[0]);
-        int ox = Integer.parseInt(object.split("_")[1]);
+    public boolean checkInterception(int[] object, int[] quadrant) {
+        int oy = object[0];
+        int ox = object[1];
 
-        int qy = Integer.parseInt(quadrant.split("_")[0]);
-        int qx = Integer.parseInt(quadrant.split("_")[1]);
+        int qy = quadrant[0];
+        int qx = quadrant[1];
         if ((ox >= 0 && ox < 9) && (oy  >= 0 && oy < 9)){
             if(ox==qx && oy==qy){
                 return true;
@@ -116,9 +122,9 @@ public class ActionField extends  JPanel{
     public BfObject nextQuadrant(Tank tank) throws Exception {
         Direction direction = tank.getDirection();
         tank.turn(direction);
-        String quadrant = getQuadrant(tank.getX(), tank.getY());
-        int y = Integer.parseInt(quadrant.split("_")[0]);
-        int x = Integer.parseInt(quadrant.split("_")[1]);
+        int[] quadrant = getQuadrant(tank.getX(), tank.getY());
+        int y = quadrant[0];
+        int x = quadrant[1];
         BfObject bfObject = battleField.scanObjectQuadrant(y, x);
 
         if (tank.getY() >= 0 && tank.getY() <= 512 && tank.getX() >= 0 && tank.getX() <= 512
@@ -142,9 +148,9 @@ public class ActionField extends  JPanel{
     public boolean nextQuadrantIsFree(Tank tank) throws Exception {
         Direction direction = tank.getDirection();
         tank.turn(direction);
-        String quadrant = getQuadrant(tank.getX(), tank.getY());
-        int y = Integer.parseInt(quadrant.split("_")[0]);
-        int x = Integer.parseInt(quadrant.split("_")[1]);
+        int[] quadrant = getQuadrant(tank.getX(), tank.getY());
+        int y = quadrant[0];
+        int x = quadrant[1];
         BfObject bfObject = battleField.scanObjectQuadrant(y, x);
 
         if (tank.getY() >= 0 && tank.getY() <= 512 && tank.getX() >= 0 && tank.getX() <= 512
@@ -172,9 +178,9 @@ public class ActionField extends  JPanel{
     public void processMove(Tank tank) throws Exception {
         Direction direction = tank.getDirection();
         tank.turn(direction);
-        String quadrant = getQuadrant(tank.getX(), tank.getY());
-        int y = Integer.parseInt(quadrant.split("_")[0]);
-        int x = Integer.parseInt(quadrant.split("_")[1]);
+        int[] quadrant = getQuadrant(tank.getX(), tank.getY());
+        int y = quadrant[0];
+        int x = quadrant[1];
         BfObject bfObject = battleField.scanObjectQuadrant(y, x);
 
         if (tank.getY() >= 0 && tank.getY() <= 512 && tank.getX() >= 0 && tank.getX() <= 512
@@ -208,9 +214,7 @@ public class ActionField extends  JPanel{
 
     public void processFire(Bullet bullet) throws Exception {
         this.bullet = bullet;
-        String coordinates = getQuadrant(bullet.getX() , bullet.getY());
-        int y = Integer.parseInt(coordinates.split("_")[0]);
-        int x = Integer.parseInt(coordinates.split("_")[1]);
+
         while (bullet.getX() > 0 && bullet.getX() < 562 && bullet.getY() > 0 && bullet.getY() < 562) {
             if (bullet.getDirection() == Direction.UP) {
                 bullet.updateY(-1);
@@ -232,10 +236,10 @@ public class ActionField extends  JPanel{
         }
     }
 
-   public  String getQuadrant(int x, int y) {
+    public int[] getQuadrant(int x, int y) {
         x = x / 64;
         y = y / 64;
-        return y + "_" + x;
+        return new int[]{y, x};
     }
 
 
@@ -243,7 +247,7 @@ public class ActionField extends  JPanel{
         battleField = new BattleField();
         defender = new T34(this, battleField, 64, 512, Direction.UP);
         agressor = new BT7(this, battleField, 0, 0, Direction.RIGHT);
-        agressor1 = new Tiger(this, battleField, 512, 0, Direction.LEFT);
+        atacker = new Tiger(this, battleField, 512, 0, Direction.LEFT);
         bullet = new Bullet(-100, -100, defender, Direction.UP);
 
         JFrame frame = new JFrame("BATTLE FIELD");
@@ -260,7 +264,7 @@ public class ActionField extends  JPanel{
          battleField.draw(g);
          defender.draw(g);
          agressor.draw(g);
-         agressor1.draw(g);
+         atacker.draw(g);
          bullet.draw(g);
     }
 

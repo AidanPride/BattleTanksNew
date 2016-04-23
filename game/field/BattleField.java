@@ -79,17 +79,16 @@ public class BattleField implements Drawable {
 
     }
 
-    public String getQuadrantXY(int x, int y) {
-        return (x) * 64 + "_" + (y) * 64;
+    public int[] getQuadrantXY(int x, int y) {
+        return new int[]{(x) * 64, (y) * 64};
     }
 
     private void drawBattlefield() {
         for (int j = 0; j < 9; j++) {
             for (int k = 0; k < 9; k++) {
-                String coordinates = getQuadrantXY(j, k);
-                int separator = coordinates.indexOf("_");
-                int y = Integer.parseInt(coordinates.substring(0, separator));
-                int x = Integer.parseInt(coordinates.substring(separator + 1));
+                int[] coordinates = getQuadrantXY(j, k);
+                int y = coordinates[0];
+                int x = coordinates[1];
                 BfObject bfObject;
                 if (scanQuadrant(j, k).equals("B")) {
                     bfObject = new Brick(x, y);
