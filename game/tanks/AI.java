@@ -1,9 +1,7 @@
 package game.tanks;
 
 import game.ActionField;
-import game.field.BattleField;
-import game.field.Rock;
-import game.field.Water;
+import game.field.*;
 import game.interfaces.Direction;
 import game.interfaces.Tank;
 
@@ -28,7 +26,6 @@ public class AI {
 
     private int[][] createlabirinth() {
         int[][] way = new int[9][9];
-        int[] start = tank.getLocation();
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if ((bf.scanObjectQuadrant(i, j) instanceof Rock) || (bf.scanObjectQuadrant(i, j) instanceof Water)) {
@@ -43,9 +40,9 @@ public class AI {
 
     public void attackHeadQuater() throws Exception {
         PathFinder pathFinder = new PathFinder(createlabirinth());
-        Point start = new Point(tank.getLocation());// Hачальная точка
-        Point end = new Point(new int[]{8, 4});//Конечная точка
-        Point[] path = pathFinder.find(start, end); // Hайдем путь
+        Point start = new Point(tank.getLocation());
+        Point end = new Point(new int[]{8, 4});
+        Point[] path = pathFinder.find(start, end);
         List<Direction> directionList = new ArrayList<>();
         for (int i = 0; i < path.length - 1; i++) {
             if (path[i + 1].getX() < path[i].getX()) {
@@ -60,7 +57,10 @@ public class AI {
         }
         for (Direction direction : directionList) {
             tank.turn(direction);
-            tank.fire();
+            if ((af.nextQuadrant(tank) instanceof Brick) ||
+                    (af.nextQuadrant(tank) instanceof Eagle)) {
+                tank.fire();
+            }
             tank.move();
         }
 
@@ -69,9 +69,9 @@ public class AI {
     public void findDefender() throws Exception {
         T34 defender = af.getDefender();
         PathFinder pathFinder = new PathFinder(createlabirinth());
-        Point start = new Point(tank.getLocation());// Hачальная точка
-        Point end = new Point(defender.getLocation());//Конечная точка
-        Point[] path = pathFinder.find(start, end); // Hайдем путь
+        Point start = new Point(tank.getLocation());
+        Point end = new Point(defender.getLocation());
+        Point[] path = pathFinder.find(start, end);
         List<Direction> directionList = new ArrayList<>();
         for (int i = 0; i < path.length - 1; i++) {
             if (path[i + 1].getX() < path[i].getX()) {

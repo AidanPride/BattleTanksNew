@@ -15,6 +15,10 @@ public class BT7 extends AbstractTank {
     private String IMG_DOWN = "BT7Down.png";
     private String IMG_LEFT = "BT7Left.png";
     private String IMG_RIGHT = "BT7Right.png";
+
+    public BT7() {
+    }
+
     public BT7(ActionField af, BattleField bf) {
         super(af, bf);
         speed = 5;

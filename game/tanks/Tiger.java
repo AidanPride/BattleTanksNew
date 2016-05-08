@@ -16,6 +16,9 @@ public class Tiger extends AbstractTank{
     private String IMG_LEFT = "TigerLeft.png";
     private String IMG_RIGHT = "TigerRight.png";
 
+    public Tiger() {
+    }
+
     public Tiger(ActionField af, BattleField bf) {
         super(af, bf);
         armor=1;

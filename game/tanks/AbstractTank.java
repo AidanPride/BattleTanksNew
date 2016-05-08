@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 
 public abstract class AbstractTank implements Tank {
@@ -27,6 +26,9 @@ public abstract class AbstractTank implements Tank {
     protected int[] location;
     protected Image img;
     protected String imgName;
+
+    public AbstractTank() {
+    }
 
     public AbstractTank(ActionField af, BattleField bf) {
         this.af = af;
@@ -98,55 +100,6 @@ public abstract class AbstractTank implements Tank {
     public void fire() throws Exception {
         Bullet bullet = new Bullet((x + 25), (y + 25), this, direction);
         af.processFire(bullet);
-    }
-
-    public void moveRandome() throws Exception {
-        Random r = new Random();
-        int dir = 0;
-        while (true) {
-            dir = r.nextInt(5);
-            if (dir > 0) {
-                direction.setId(dir);
-                fire();
-                af.processMove(this);
-                fire();
-            }
-        }
-    }
-
-    public void moveToQuadrant(int v, int h) throws Exception {
-        int[] coordinates = bf.getQuadrantXY(v, h);
-        int y = coordinates[0];
-        int x = coordinates[1];
-
-        if (this.x < x) {
-            while (this.x != x) {
-                turn(Direction.RIGHT);
-                fire();
-                move();
-            }
-        } else {
-            while (this.x != x) {
-                turn(Direction.LEFT);
-                fire();
-                move();
-            }
-        }
-
-
-        if (this.y < y) {
-            while (this.y != y) {
-                turn(Direction.DOWN);
-                fire();
-                move();
-            }
-        } else {
-            while (this.y != y) {
-                turn(Direction.UP);
-                fire();
-                move();
-            }
-        }
     }
 
     public void moveToCoordinates(Tank tank) throws Exception {

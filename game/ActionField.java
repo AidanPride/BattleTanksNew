@@ -21,15 +21,19 @@ public class ActionField extends  JPanel{
     private T34 defender;
     private BT7 agressor;
     private Tiger atacker;
+    private Tank tank;
     private Bullet bullet;
     private Direction direction;
 
 
    void runTheGame() throws Exception {
-       AI AiBT7 = new AI(this, battleField, agressor);
-       AI AiTiger = new AI(this, battleField, atacker);
-       AiTiger.findDefender();
-       AiBT7.attackHeadQuater();
+//       AI AiBT7 = new AI(this, battleField, agressor);
+//       AI AiTiger = new AI(this, battleField, atacker);
+//       AI AiT34 = new AI(this, battleField , defender);
+//       AiTiger.findDefender();
+//       AiBT7.attackHeadQuater();
+       AI AiTank = new AI(this, battleField, tank);
+       AiTank.attackHeadQuater();
     }
 
     private boolean processInterception() throws Exception{
@@ -243,11 +247,21 @@ public class ActionField extends  JPanel{
     }
 
 
-    public ActionField() throws Exception {
+    public ActionField(Tank tank) throws Exception {
         battleField = new BattleField();
         defender = new T34(this, battleField, 64, 512, Direction.UP);
         agressor = new BT7(this, battleField, 0, 0, Direction.RIGHT);
         atacker = new Tiger(this, battleField, 512, 0, Direction.LEFT);
+
+        if (tank instanceof Tiger) {
+            this.tank = atacker;
+        }
+        if (tank instanceof T34) {
+            this.tank = defender;
+        }
+        if (tank instanceof BT7) {
+            this.tank = agressor;
+        }
         bullet = new Bullet(-100, -100, defender, Direction.UP);
 
         JFrame frame = new JFrame("BATTLE FIELD");
@@ -270,5 +284,13 @@ public class ActionField extends  JPanel{
 
     public T34 getDefender() {
         return defender;
+    }
+
+    public BT7 getAgressor() {
+        return agressor;
+    }
+
+    public Tiger getAtacker() {
+        return atacker;
     }
 }

@@ -14,6 +14,10 @@ public class T34 extends AbstractTank{
     private String IMG_DOWN = "T34Down.png";
     private String IMG_LEFT = "T34Left.png";
     private String IMG_RIGHT = "T34Right.png";
+
+    public T34() {
+    }
+
     public T34(ActionField af, BattleField bf) {
         super(af, bf);
         speed = 10;

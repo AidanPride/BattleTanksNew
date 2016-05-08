@@ -13,14 +13,14 @@ public class BattleField implements Drawable {
     final int BF_HEIGHT = 590;
     private String[][] battleFieldString =
             {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
-            {"B", " ", "B", "B", " ", " ", " ", " ", "B"},
-            {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
-            {"B", "B", "B", " ", " ", " ", "B", "B", "B"},
-            {"R", "B", "W", "W", "W", "W", "W", "B", "R"},
-            {"R", "B", " ", "B", "B", "B", " ", "B", "R"},
+                    {"B", " ", "B", "B", " ", " ", " ", " ", "B"},
+                    {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
+                    {"B", "B", "B", " ", " ", " ", "B", "B", "B"},
+                    {"R", "B", "W", "W", "W", "W", "W", "B", "R"},
+                    {"R", "B", " ", "B", "B", "B", " ", "B", "R"},
                     {"R", "B", " ", "B", "B", " ", " ", "B", "R"},
                     {"B", " ", " ", "B", "B", "B", "B", " ", "B"},
-            {"B", " ", " ", "B", "E", "B", "B", "B", "B"}};
+                    {"B", " ", " ", "B", "E", "B", "B", "B", "B"}};
     private BfObject[][] battleField = new BfObject[9][9];
 
     public BattleField() {
@@ -149,19 +149,33 @@ public class BattleField implements Drawable {
                         {"B", " ", " ", "B", "R", "B", "B", " ", "B"},
                         {"B", " ", " ", "B", "E", "B", "B", "B", "B"}};
 
+        String[][] b4 =
+                {{" ", "B", "B", "B", "B", "B", "B", "B", " "},
+                        {"B", " ", "B", "B", " ", " ", " ", " ", "B"},
+                        {"B", "B", "B", " ", "B", "B", "B", "B", "B"},
+                        {"B", "B", "B", " ", " ", " ", "B", "B", "B"},
+                        {"R", "B", "W", "W", "W", "W", "W", "B", "R"},
+                        {"R", "B", " ", "B", "B", "B", " ", "B", "R"},
+                        {"R", "B", " ", "B", "B", " ", " ", "B", "R"},
+                        {"B", " ", " ", "B", "R", "R", "B", " ", "B"},
+                        {"B", " ", " ", "B", "E", "R", "B", "B", "B"}};
+
         public Maps() {
         }
 
         private String[][] map() {
             Random r = new Random();
-            int map = r.nextInt(3);
+            int map = r.nextInt(4);
             if (map == 1) {
                 return b1;
             } else if (map == 2) {
                 return b2;
-            } else
+            } else if (map == 3) {
                 return b3;
-        }
+            } else {
+                return b4;
+            }
 
+        }
     }
 }
