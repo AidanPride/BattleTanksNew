@@ -1,5 +1,7 @@
 package game;
 
+import gui.StartGUI;
+
 public class Launcher {
     public static void main(String[] args) throws Exception {
         StartGUI start = new StartGUI();

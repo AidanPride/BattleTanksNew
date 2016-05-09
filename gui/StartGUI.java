@@ -1,4 +1,4 @@
-package game;
+package gui;
 
 import game.interfaces.Tank;
 import game.tanks.BT7;

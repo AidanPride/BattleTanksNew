@@ -11,6 +11,7 @@ import game.tanks.AI;
 import game.tanks.BT7;
 import game.tanks.T34;
 import game.tanks.Tiger;
+import gui.GameOver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +34,17 @@ public class ActionField extends  JPanel{
 //       AiTiger.findDefender();
 //       AiBT7.attackHeadQuater();
        AI AiTank = new AI(this, battleField, tank);
-       AiTank.attackHeadQuater();
+       if (tank instanceof BT7) {
+           AiTank.attackHeadQuater();
+       }
+       if (tank instanceof Tiger) {
+           AiTank.findDefender();
+       }
+       if (defender.isDestroyed() || (battleField.scanObjectQuadrant(8, 4) instanceof Simple)) {
+
+           GameOver gameOver = new GameOver();
+       }
+
     }
 
     private boolean processInterception() throws Exception{
@@ -65,7 +76,6 @@ public class ActionField extends  JPanel{
                     return false;
                   }else {
                     defender.destroy();
-                    defender.respawn();
                     return true;
                   }
             }
